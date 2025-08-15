@@ -1,26 +1,422 @@
+/* =============================== */
+/* Tailwind base, components, utilities */
 @import "tailwindcss";
-
+@import "react-datepicker/dist/react-datepicker.css";
+/* =============================== */
+/* CSS Variables (Design tokens) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --green-500: #24ae7c;
+  --green-600: #0d2a1f;
+  --blue-500: #79b5ec;
+  --blue-600: #152432;
+  --red-500: #f37877;
+  --red-600: #3e1716;
+  --red-700: #f24e43;
+
+  --light-200: #e8e9e9;
+
+  --dark-200: #0d0f10;
+  --dark-300: #131619;
+  --dark-400: #1a1d21;
+  --dark-500: #363a3d;
+  --dark-600: #76828d;
+  --dark-700: #abb8c4;
+
+  --font-sans: "Inter", system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ========================================================================= */
+/* --- React Datepicker Modern Light Mode Styles --- */
+/* Place this CSS in your global stylesheet (e.g., globals.css) */
+/* Make sure it's imported AFTER 'react-datepicker/dist/react-datepicker.css' */
+/* ========================================================================= */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base calendar container */
+
+/* =============================== */
+/* Base styles */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  .dark body {
+    background-color: var(--dark-200);
+    color: var(--dark-600);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* =============================== */
+/* Background Images */
+@layer utilities {
+  .bg-appointments {
+    background-image: url("/assets/images/appointments-bg.png");
+  }
+  .bg-pending {
+    background-image: url("/assets/images/pending-bg.png");
+  }
+  .bg-cancelled {
+    background-image: url("/assets/images/cancelled-bg.png");
+  }
+  .bg-light-rays {
+    background-image: url("/assets/images/light-rays.png");
+  }
+}
+
+/* =============================== */
+/* Custom Animations */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Animations utilities */
+@layer utilities {
+  .animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+  }
+  .animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+  }
+  .animate-caret-blink {
+    animation: caret-blink 1.25s ease-out infinite;
+  }
+}
+
+/* =============================== */
+/* Custom Colors Utilities */
+@layer utilities {
+  .text-green-500 {
+    color: var(--green-500);
+  }
+  .text-dark-700 {
+    color: var(--dark-700);
+  }
+  .border-dark-500 {
+    border: var(--dark-500);
+  }
+  .bg-green-500 {
+    background-color: var(--green-500);
+  }
+  .bg-red-700 {
+    background-color: var(--red-700);
+  }
+  .bg-dark-300 {
+    background-color: var(--dark-300);
+  }
+  .bg-dark-400 {
+    background-color: var(--dark-400);
+  }
+}
+
+/* =============================== */
+/* Scrollbar Removal */
+@layer base {
+  .remove-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  .remove-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
+}
+
+/* =============================== */
+/* Custom Utility Classes with @apply - no errors */
+@layer utilities {
+  .remove-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  .sidebar {
+    @apply w-full max-w-72 flex-col overflow-auto bg-gray-800 px-7 py-10;
+  }
+  .left-sidebar {
+    @apply hidden lg:flex;
+  }
+  .right-sidebar {
+    @apply hidden xl:flex;
+  }
+  .clip-text {
+    @apply bg-clip-text text-transparent;
+  }
+  .bg-image {
+    @apply bg-gray-900  bg-cover bg-no-repeat;
+  }
+  .header {
+    @apply text-[32px] leading-[36px] font-bold md:text-[36px];
+  }
+  .sub-header {
+    @apply text-[18px] leading-[24px] font-bold md:text-[24px];
+  }
+  .container {
+    @apply relative flex-1 overflow-y-auto px-[5%];
+  }
+  .sub-container {
+    @apply mx-auto flex flex-col py-10;
+  }
+  .side-img {
+    @apply hidden h-full object-cover md:block;
+  }
+  .copyright {
+    @apply text-[14px] font-normal justify-items-end text-center text-gray-500 xl:text-left;
+  }
+  .success-img {
+    @apply m-auto flex flex-1 flex-col items-center justify-between gap-10 py-10;
+  }
+  .request-details {
+    @apply flex w-full flex-col items-center gap-8 border-y-2 border-gray-700 py-8 md:w-fit md:flex-row;
+  }
+  .admin-header {
+    @apply sticky top-3 z-20 mx-3 flex items-center justify-between rounded-2xl  px-[5%] py-5 shadow-lg xl:px-12;
+  }
+  .admin-main {
+    @apply flex flex-col items-center space-y-6 px-[5%] pb-12 xl:space-y-12 xl:px-12;
+  }
+  .admin-stat {
+    @apply flex w-full flex-col justify-between gap-5 sm:flex-row xl:gap-10;
+  }
+  .radio-group {
+    @apply flex h-full flex-1 items-center gap-2 rounded-md border border-dashed border-gray-700  p-3;
+  }
+  .checkbox-label {
+    @apply cursor-pointer text-sm font-medium text-gray-500 peer-disabled:cursor-not-allowed peer-disabled:opacity-70 md:leading-none;
+  }
+  .file-upload {
+    @apply text-[12px] flex cursor-pointer flex-col items-center justify-center gap-3 rounded-md border border-dashed border-gray-700 p-5;
+  }
+  .file-upload_label {
+    @apply flex flex-col justify-center gap-2 text-center text-gray-500;
+  }
+  .stat-card {
+    @apply flex flex-1 flex-col gap-6 rounded-2xl bg-cover p-6 shadow-lg;
+  }
+  .status-badge {
+    @apply flex w-fit items-center gap-2 rounded-full px-4 py-2;
+  }
+  .data-table {
+    @apply z-10 w-full overflow-hidden rounded-lg border border-gray-700 shadow-lg;
+  }
+  .table-actions {
+    @apply flex w-full items-center justify-between space-x-2 p-4;
+  }
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+  .text-24-bold {
+    @apply text-[24px] leading-[28px] font-bold;
+  }
+  .text-32-bold {
+    @apply text-[32px] leading-[36px] font-bold;
+  }
+  .text-18-bold {
+    @apply text-[18px] leading-[24px] font-bold;
+  }
+  .text-16-semibold {
+    @apply text-[16px] leading-[20px] font-semibold;
+  }
+  .text-16-regular {
+    @apply text-[16px] leading-[20px] font-normal;
+  }
+
+  .text-14-regular {
+    @apply text-[14px] leading-[18px] font-normal;
+  }
+  .text-12-regular {
+    @apply text-[12px] leading-[16px] font-normal;
+  }
+  .text-12-semibold {
+    @apply text-[12px] leading-[16px] font-semibold;
+  }
+  .shad-primary-btn {
+    @apply bg-green-500 text-white;
+  }
+  .shad-danger-btn {
+    @apply bg-red-700 text-white;
+  }
+  .shad-gray-btn {
+    @apply border border-gray-700 cursor-pointer bg-gray-700 text-white;
+  }
+  .shad-input-label {
+    @apply text-gray-500;
+  }
+  .shad-input {
+    @apply placeholder:text-gray-600 border-gray-700 h-11 focus-visible:ring-0 focus-visible:ring-offset-0;
+  }
+  .shad-input-icon {
+    @apply bg-gray-700 placeholder:text-gray-600 border-gray-700 h-11 focus-visible:ring-0 focus-visible:ring-offset-0;
+  }
+  .shad-textArea {
+    @apply placeholder:text-gray-600 border-gray-700 focus-visible:ring-0 focus-visible:ring-offset-0;
+  }
+  .shad-combobox-item {
+    @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50;
+  }
+  .shad-combobox-trigger {
+    @apply h-11;
+  }
+  .shad-select-trigger {
+    @apply bg-gray-700 placeholder:text-gray-600 border-gray-700 h-11 focus:ring-0 focus:ring-offset-0;
+  }
+  .shad-select-content {
+    @apply bg-gray-700 border-gray-700 flex;
+  }
+  .shad-dialog {
+    @apply border-gray-700;
+  }
+  .shad-dialog button {
+    @apply focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0;
+  }
+  .shad-error {
+    @apply text-red-400;
+  }
+  .shad-table {
+    @apply rounded-lg overflow-hidden;
+  }
+  .shad-table-row-header {
+    @apply border-b border-gray-700 text-gray-200 hover:bg-transparent;
+  }
+  .shad-table-row {
+    @apply border-b border-gray-700 text-gray-200;
+  }
+  .shad-otp {
+    @apply w-full flex justify-between;
+  }
+  .shad-otp-slot {
+    @apply justify-center flex border border-gray-700 text-white rounded-lg size-16 gap-4;
+  }
+  .shad-alert-dialog {
+    @apply space-y-5  border-gray-700 outline-none;
+  }
+  .shad-sheet-content button {
+    @apply top-2 focus:ring-0 focus:ring-offset-0 focus-visible:border-none focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-0;
+  }
+  .input-phone {
+    @apply mt-2 h-11 rounded-md px-3 text-sm border  bg-black border-gray-500;
+  }
+  .date-picker {
+    @apply overflow-hidden border-transparent w-full placeholder:text-gray-600 h-11   rounded-md px-3 outline-none;
+  }
+}
+
+/* =============================== */
+/* React Datepicker Overrides */
+.react-datepicker-wrapper.date-picker {
+  display: flex;
+  align-items: center;
+}
+
+.react-datepicker,
+.react-datepicker__time,
+.react-datepicker__header,
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker-time__header {
+  background-color: #c0c0c0;
+  border-color: #000000;
+  color: #89aed1;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name,
+.react-datepicker-time__header {
+  color: #ffffff;
+}
+
+.react-datepicker__triangle {
+  fill: #1a1d21;
+  color: #1a1d21;
+  stroke: #1a1d21;
+}
+
+.react-datepicker__time-list-item:hover {
+  background-color: #363a3d;
+}
+
+.react-datepicker__input-container input {
+  background-color: #1a1d21;
+  width: 100%;
+  outline: none;
+}
+
+.react-datepicker__day--selected {
+  background-color: #87e4c2;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.react-datepicker__time-list-item--selected {
+  background-color: #24ae7c;
+}
+
+.react-datepicker__time-container {
+  border-left: 1px solid #363a3d;
+}
+
+.react-datepicker__time-list-item {
+  display: flex;
+  align-items: center;
+}
+
+/* =============================== */
+/* React Phone Input Overrides */
+.PhoneInputInput {
+  outline: none;
+  margin-left: 4px;
+  background: #1a1d21;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.PhoneInputInput::placeholder {
+  color: #1a1d21;
 }
